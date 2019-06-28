@@ -5,14 +5,15 @@ const char *ssid = "SK";
 const char *pass = "karimsalah"; 
  
 unsigned int localPort = 2000; // local port to listen for UDP packets
+unsigned int ServerPort = 50;
  
-IPAddress ServerIP(192,168,2,3);
+IPAddress ServerIP(192,168,2,15);
 IPAddress ClientIP(192,168,2,4);
  
 // A UDP instance to let us send and receive packets over UDP
 WiFiUDP udp;
- 
-char packetBuffer[9];   //Where we get the UDP data
+WiFiUDP Server_udp; 
+unsigned char packetBuffer[UDP_TX_PACKET_MAX_SIZE + 1];   //Where we get the UDP data
 //=======================================================================
 //                Setup
 //=======================================================================
@@ -35,6 +36,11 @@ Serial.print("Connecting");
     Serial.print("Local port: ");
     
     Serial.println(udp.localPort());
+
+//Initialize the Server connection
+    Server_udp.begin(ServerPort);
+     Serial.print("Local IP:");
+    Serial.println(Server_udp.localPort());
     
 }
 //======================================================================
@@ -60,7 +66,16 @@ void loop()
     else {
       // We've received a UDP packet, send it to serial
       //udp.read(); // read the packet into the buffer, we are reading only one byte
-      Serial.print(udp.read());
-      delay(20);
+    udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
+     Serial.println(packetBuffer[0]);
+     Server_udp.parsePacket();
+    Server_udp.beginPacket(ServerIP,ServerPort);
+    Server_udp.write(packetBuffer[0]);
+    Server_udp.endPacket();
+//    packetBuffer[n] = 0;
+   
+    
+    //Serial.println(udp.read());
+          delay(20);
     }
 }

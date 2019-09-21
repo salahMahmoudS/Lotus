@@ -5,6 +5,6 @@ echo $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 
 //echo socket_sendto($socket, $data , strlen($data), 0, "192.168.2.94", 82 );
 
-echo socket_sendto($socket, $data , strlen($data), 0, "192.168.2.50", 2000 );
+echo socket_sendto($socket, $data , strlen($data), 0, "192.168.43.216", 2500 );
 
 ?>

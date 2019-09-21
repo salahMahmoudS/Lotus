@@ -23,7 +23,7 @@ set_time_limit(30);
 
 $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 	
-	socket_bind($socket, "192.168.2.15", 50) or onSocketFailure("Failed to bind to 0.0.0.0:9000", $socket);
+	socket_bind($socket, "192.168.43.16", 2000) or onSocketFailure("Failed to bind to 0.0.0.0:9000", $socket);
 	$socket2 = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 	while (true) {
 	socket_recvfrom($socket, $buffer, 32768, 0, $ip, $port);
